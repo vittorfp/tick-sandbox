@@ -20,6 +20,21 @@ services:
       # UDP Port
       - "8089:8089"
 
+  mqtt:
+    image: "eclipse-mosquitto"
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+    links:
+      - influxdb
+      - telegraf
+    depends_on:
+      - influxdb
+      - telegraf
+
+
   telegraf:
     # Full tag list: https://hub.docker.com/r/library/telegraf/tags/
     build:
